@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1 class="cover-heading">L'environnement d'attaque (1/2)</h1>
+<p class="lead">
+  Vous pouvez observer ci-dessous la page de connexion que nous allons attaquer.
+  Nous savons grâce à une source externe que l'adresse email de l'administrateur est admin@demo.fr mais son mot de passe nous est
+  inconnu. Nous allons donc tester une multitude de mots de passe regroupés dans un <i>dictionnaire</i> pour cet email.
+</p>
+<div class="card text-white bg-secondary mb-4">
+  <div class="card-header">
+    Formulaire de connexion
+  </div>
+  <div class="card-body">
+    <form>
+      <div class="form-group row">
+        <label for="email" class="col-4 col-form-label">Adresse Email</label>
+        <div class="col-8">
+          <input type="text" class="form-control" id="email" placeholder="admin@demo.fr">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="password" class="col-4 col-form-label">Mot de passe</label>
+        <div class="col-8">
+          <input type="password" class="form-control" id="password" placeholder="">
+        </div>
+      </div>
+    </form>
+    <p class="text-danger bg-white" id="msg-error" style="display: none; text-shadow: none">Echec de la connexion: Les identifiants sont introuvables !</p>
+    <p class="text-success bg-white" id="msg-ok" style="display: none; text-shadow: none">Connexion réussi ! Vous êtes à présent connecté Thomas !</p>
+    <button class="btn btn-lg btn-dark btn-block" id="btn-login">
+      Se connecter <i id="wait-login" class="fas fa-circle-notch fa-spin" style="display: none"></i>
+    </button>
+  </div>
+</div>
+<p class="lead">
+  <a href="/" class="btn btn-lg btn-primary">Précédent</a>
+  <a href="/simulation/etape-2" class="btn btn-lg btn-secondary ml-5">Suivant</a>
+</p>
+{% endblock %}
+
+{% block scripts %}
+
+<script type="text/javascript">
+  function connexion() {
+    $('#wait-login').show();
+    $('#msg-error').hide();
+    $('#msg-ok').hide();
+    setTimeout(function () {
+      $('#wait-login').hide();
+
+      if ($('#email').val() === 'admin@demo.fr' && $('#password').val() === 'ameliemeli') {
+        $('#msg-ok').show();
+      } else {
+        $('#msg-error').show();
+      }
+
+      setTimeout(function () {
+        $('#msg-error').hide();
+        $('#msg-ok').hide();
+      }, 4000);
+    }, 500);
+  }
+
+  $(function() {
+    $('#email,#password').keypress(function (e) {
+      if (e.which == 13) {
+        connexion();
+        return false;
+      }
+    });
+    $('#btn-login').on('click', function() {
+      connexion();
+    });
+  });
+</script>
+
+{% endblock %}

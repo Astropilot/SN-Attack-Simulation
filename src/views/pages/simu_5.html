@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1 class="cover-heading">L'attaque sur un système protégé</h1>
+<p class="lead">
+  Cette fois, Thomas notre administrateur vient de rajouter au système de connexion
+  une protection par un blocage automatique au bout de trois essais manqués.
+  Lancez l'attaque pour observer le comportement du système de sécurité.
+</p>
+<div class="row" id="attack-simulation">
+  <div class="col-8">
+    <div class="card text-white bg-secondary mb-4">
+      <div class="card-header">
+        Formulaire de connexion
+      </div>
+      <div class="card-body">
+        <form>
+          <div class="form-group row">
+            <label for="email" class="col-4 col-form-label">Adresse Email</label>
+            <div class="col-8">
+              <input type="text" class="form-control" id="email" value="admin@demo.fr" readonly>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="password" class="col-4 col-form-label">Mot de passe</label>
+            <div class="col-8">
+              <input type="password" class="form-control" id="password" readonly>
+            </div>
+          </div>
+        </form>
+        <p class="text-danger bg-white" id="msg-error" style="display: none; text-shadow: none">Echec de la connexion: Il vous reste <span>3</span> essai(s) restant !</p>
+        <p class="text-danger bg-white" id="msg-error2" style="display: none; text-shadow: none">Echec de la connexion: Vous êtes bloqué !</p>
+        <button class="btn btn-lg btn-dark btn-block" id="btn-login">
+          Se connecter <i id="wait-login" class="fas fa-circle-notch fa-spin" style="display: none"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="card text-dark bg-light mb-4" id="dictionnaire">
+      <div class="card-header">
+        dictionnaire.txt
+      </div>
+      <div class="card-body" id="words">
+        <span><i class="fas fa-play fa-xs text-success" style="display: none"></i> <span>tom123</span></span><br>
+        <span><i class="fas fa-play fa-xs text-success" style="display: none"></i> <span>ski_tom</span></span><br>
+        <span><i class="fas fa-play fa-xs text-success" style="display: none"></i> <span>thomaspassword</span></span><br>
+        <span><i class="fas fa-play fa-xs text-success" style="display: none"></i> <span>12081997</span></span><br>
+        <span><i class="fas fa-play fa-xs text-success" style="display: none"></i> <span>ameliemeli</span></span><br>
+      </div>
+    </div>
+  </div>
+</div>
+<p class="lead">
+  <button class="btn btn-lg btn-success btn-block" id="btn-attack">
+    <i class="fas fa-play"></i> <span>Lancer l'attaque</span>
+  </button>
+</p>
+<p class="lead after_attack" style="display: none">
+  Cette fois notre attaque n'a pas pu trouver le mot de passe de l'administrateur. Comme vous l'avez pu remarqué,
+  après les trois essais échoués, le système bloque automatiquement la connexion, donc même si <i>ameliemeli</i> est le bon mot de
+  passe, il est impossible pour le bruteforce de le savoir.
+</p>
+<p class="lead">
+  <a href="/simulation/etape-4" class="btn btn-lg btn-primary">Précédent</a>
+  <a href="/simulation/etape-6" class="btn btn-lg btn-secondary after_attack ml-5" style="display: none">Suivant</a>
+</p>
+{% endblock %}
+
+{% block scripts %}
+
+<script type="text/javascript">
+  var word_index = 0;
+  var words = 5;
+  var essais = 3;
+
+  function resetAttaque() {
+    word_index = 0;
+    essais = 3;
+
+    $('#wait-login').hide();
+    $('#msg-error').hide();
+    $('#msg-error2').hide();
+
+    $('#words > span').find('i').hide().removeClass('fa-times-circle text-danger').addClass('fa-play text-success');
+    $('#words > span').find('span').removeClass();
+  }
+
+  function testNextWord() {
+    $('#words > span').eq(word_index).find('i').show();
+    $('#words > span').eq(word_index).find('span').addClass('text-warning');
+
+    $('#password').val($('#words > span').eq(word_index).text());
+
+    $('#wait-login').show();
+    $('#msg-error').hide();
+    $('#msg-error2').hide();
+    setTimeout(function () {
+      $('#wait-login').hide();
+
+      if (essais === 0) {
+        $('#msg-error2').show();
+      } else {
+        $('#msg-error > span').text(essais);
+        $('#msg-error').show();
+        essais--;
+      }
+
+      $('#words > span').eq(word_index).find('i').removeClass('fa-play text-success').addClass('fa-times-circle text-danger');
+      $('#words > span').eq(word_index).find('span').removeClass('text-warning').addClass('text-danger');
+
+      if (word_index === words - 1) { // Fin de l'attaque
+        $('#btn-attack > i').removeClass('fa-circle-notch fa-spin').addClass('fa-play');
+        $('#btn-attack > span').text('Relancer l\'attaque');
+        $('#btn-attack').prop('disabled', false);
+
+        $('.after_attack').show();
+        return;
+      }
+
+      setTimeout(function () {
+        word_index++;
+        testNextWord();
+      }, 2000);
+    }, 2000);
+  }
+
+  $(function() {
+    $('#btn-attack').on('click', function() {
+      resetAttaque();
+
+      $('#btn-attack > i').removeClass('fa-play').addClass('fa-circle-notch fa-spin');
+      $('#btn-attack > span').text('Attaque en cours...');
+      $('#btn-attack').prop('disabled', true);
+      testNextWord();
+    });
+  });
+</script>
+
+{% endblock %}

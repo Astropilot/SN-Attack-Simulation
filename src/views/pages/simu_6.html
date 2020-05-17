@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1 class="cover-heading">Comment se protéger du <i>Bruteforce</i></h1>
+<p class="lead">
+  De manière générale la protection contre le bruteforce s'implémente de la manière suivante :
+</p>
+<ul class="lead">
+  <li>
+    Lors d'un echec de connexion on sauvegarde quelque part <a href="https://en.wikipedia.org/wiki/IP_address" target="_blank">l'adresse IP</a>
+    et le nombre de tentatives restantes (généralement 3 à 5 pour ne pas pénaliser les utilisateurs ayant simplement oublié leur mot de passe)
+  </li>
+  <li>Lors d'un nouvel echec de connexion sur un temps court (0 &lt; t &lt; 3min) et si son IP est déjà enregistrée, on abaisse le nombre d'essais restant</li>
+  <li>Si l'utilisateur à atteint la limite d'essais, on empêche totalement la connexion soit pour un laps de temps, soit en attendant le déblocage par un responsable</li>
+</ul>
+<p class="lead">
+  Cette méthode est simple à implémenter et bloque déjà les bruteforce basiques. Néanmoins dans la nature on retrouve
+  beaucoup d'outils très avancé utilisant énormements d'adresses IP pour contourner ces blocages. La méthode actuelle
+  la plus efficace reste l'utilisation d'un <a href="https://en.wikipedia.org/wiki/CAPTCHA" target="_blank"><i>CAPTCHA</i></a>
+  qui demande un effort énorme aux bruteforce pour contourner cette protection (ce qui n'empêche pas d'utiliser la méthode précédemment décrite en complément !).
+</p>
+<p class="lead">
+  <a href="/simulation/etape-5" class="btn btn-lg btn-primary mr-5">Précédent</a>
+  <a href="/simulation/conclusion" class="btn btn-lg btn-secondary">Suivant</a>
+</p>
+{% endblock %}

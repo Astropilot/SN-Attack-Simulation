@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1 class="cover-heading">L'environnement d'attaque (2/2)</h1>
+<p class="lead">
+  Comme mentionné précédemment, nous avons besoin d'un dictionnaire de mots de passe. Il en existe beaucoup sur
+  internet et leur volume est assez important (plusieurs giga octets). Il est possible d'établir un dictionnaire
+  ciblé sur une personne, où l'on définit une liste potentielle de mots de passe autour de lui-même, ses centres d'intérêts,
+  sa famille, etc...
+</p>
+<p class="lead">
+  Dans le cadre de notre simulation nous allons prendre le dictionnaire ci-dessous qui nous à été fourni par notre
+  source extérieur qui connait bien l'administrateur.
+</p>
+<div class="card text-dark bg-light mb-4" id="dictionnaire">
+  <div class="card-header">
+    dictionnaire.txt
+  </div>
+  <div class="card-body">
+    <span><span class="text-info">tom</span>123</span><br>
+    <span>ski_<span class="text-info">tom</span></span><br>
+    <span><span class="text-info">thom</span>aspassword</span><br>
+    <span>12081997</span><br>
+    <span>ameliemeli</span><br>
+  </div>
+</div>
+<p>
+  <i>
+    NB: On peux remarquer la présence forte du diminutif <span class="text-info">tom</span>. Il est absolument à éviter
+    d'utiliser son prénom ou même un diminutif pour constituer son mot de passe !
+  </i>
+</p>
+<p class="lead">
+  <a href="/simulation/etape-1" class="btn btn-lg btn-primary">Précédent</a>
+  <a href="/simulation/etape-3" class="btn btn-lg btn-secondary ml-5">Suivant</a>
+</p>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1 class="cover-heading">L'attaque</h1>
+<p class="lead">
+  Plusieurs inconvénients sur cette technique sont néanmoins à noter:
+</p>
+<ul class="lead">
+  <li>L'opération prends généralement beaucoup plus de temps et d'essais car il est rare de pouvoir disposer de
+  dictionnaires aussi ciblés</li>
+  <li>Elle fonctionne surtout pour des personnes ayant des mots de passe faibles (peu de caractères et surtout des mots communs)</li>
+  <li>Cette technique n'est pas discrète, selon le système de sécurité elle peut être détectée au bout de 3-4 essais</li>
+</ul>
+<p class="lead">
+  Nous allons voir dans la prochaine partie ce que donne la même attaque mais avec cette fois une protection minimale
+  qui consiste à bloquer les tentatives de connexion à partir de 3 essais manqués.
+</p>
+<p class="lead">
+  <a href="/simulation/etape-3" class="btn btn-lg btn-primary mr-5">Précédent</a>
+  <a href="/simulation/etape-5" class="btn btn-lg btn-secondary">Suivant</a>
+</p>
+{% endblock %}

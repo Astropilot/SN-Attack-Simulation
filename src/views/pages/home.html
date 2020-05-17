@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1 class="cover-heading">
+  Simulation d'une attaque par <i>Bruteforce</i>
+</h1>
+<p class="lead">
+  Le but de cette simulation est de réaliser sur une page de connexion une attaque dite de
+  <a href="https://en.wikipedia.org/wiki/Brute-force_attack" target="_blank"><i>Bruteforce</i></a> et plus précisement une
+  <a href="https://en.wikipedia.org/wiki/Dictionary_attack" target="_blank"><i>attaque par dictionnaire</i></a>.
+  Ce type d'attaque se caractérise par des tentatives répétées et très rapides de connexion sur une ressource (souvent web)
+  à partir d'une liste de mots de passe. On test le plus de mots de passe possible jusqu'à obtenir l'accès désiré.
+</p>
+<p class="lead">
+  Ce site simule à la fois le service web contenant le système de connexion et l'attaquant.
+</p>
+<p class="lead">
+  <a href="/simulation/etape-1" class="btn btn-lg btn-secondary">Suivant</a>
+</p>
+{% endblock %}

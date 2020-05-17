@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1 class="cover-heading">Conclusion</h1>
+<p class="lead">
+  L'attaque par dictionnaire est encore très présente aujourd'hui car malgré l'augmentation général de la sécurité des systèmes
+  si l'on n'oblige pas l'utilisateur à devoir choisir un mot de passe réellement sécurisé beaucoup sont encore amené à choisir
+  des mots de passe très faibles composés très souvent seulement de lettres de quelques chiffres. Pour rappel, le mot de passe
+  le plus utilisé en 2019 est <mark>123456</mark> suivi de près par <mark>password</mark> !
+</p>
+<p class="lead">
+  Lors de la mise en place d'un système d'utilisateur (et donc de connexion), vous devez réfléchir à mettre en place non
+  seulement un CAPTCHA ainsi que les essais mais aussi obliger vos utilisateurs à s'inscrire avec un mot de passe considéré
+  comme sécurisé. Une bonne base est d'obliger au minimum 8 caractères, avec au minimum une majuscule, un chiffre et un caractère spécial.
+</p>
+<p class="lead">
+  Nous vous remercions pour votre participation à cette simulation ! Nous espérons qu'elle vous a permis de comprendre l'attaque par dictionnaire
+  ainsi que l'enjeu pour vos utilisateurs et les pistes que vous devez explorer pour protéger ces derniers.
+</p>
+<p class="lead">
+  <a href="/simulation/etape-5" class="btn btn-lg btn-primary mr-5">Précédent</a>
+  <a href="/" class="btn btn-lg btn-secondary">Accueil</a>
+</p>
+{% endblock %}
