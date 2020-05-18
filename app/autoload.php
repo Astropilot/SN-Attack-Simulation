@@ -1,6 +1,6 @@
 <?php
 
-namespace Testify;
+namespace HomeFramework;
 
 class Psr4AutoloaderClass {
 
@@ -69,10 +69,5 @@ $loader = new Psr4AutoloaderClass();
 
 $loader->register();
 
-$loader->addNamespace('Testify', 'src/');
-$loader->addNamespace('Testify\Model', 'src/models/');
-$loader->addNamespace('Testify\Component', 'app/components/');
-$loader->addNamespace('Testify\Router', 'app/router/');
-$loader->addNamespace('Testify\Network', 'app/network/');
-$loader->addNamespace('Testify\Tests', 'tests/');
-$loader->addNamespace('PHPMailer\PHPMailer', 'app/phpmailer/');
+$loader->addNamespace('HomeFramework\Component', 'app/components/');
+$loader->addNamespace('HomeFramework\Router', 'app/router/');

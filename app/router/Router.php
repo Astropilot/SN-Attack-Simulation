@@ -1,8 +1,6 @@
 <?php
 
-namespace Testify\Router;
-
-use Testify\Component\I18n;
+namespace HomeFramework\Router;
 
 class Router {
 
@@ -62,7 +60,6 @@ class Router {
             $routesList = $this->{strtolower($this->request->requestMethod)};
         $formatedRoute = parse_url($this->request->requestUri, PHP_URL_PATH);
         $formatedRoute = $this->formatRoute($formatedRoute);
-        $formatedRoute = I18n::getInstance()->setLangFromURL($formatedRoute);
 
         foreach ($routesList as $route => $handler) {
 
@@ -80,7 +77,7 @@ class Router {
                     array_push($values, $value);
                 }
                 $response = call_user_func_array($handler, $values);
-                if (!($response instanceof \Testify\Router\Response))
+                if (!($response instanceof \HomeFramework\Router\Response))
                     throw new \Exception('The controller response need to be a Response object!');
 
                 http_response_code($response->getHttpCode());

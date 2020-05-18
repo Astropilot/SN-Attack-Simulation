@@ -1,7 +1,7 @@
 <?php
 
-use Testify\Router\Router;
-use Testify\Router\Response;
+use HomeFramework\Router\Router;
+use HomeFramework\Router\Response;
 
 $router = Router::getInstance();
 

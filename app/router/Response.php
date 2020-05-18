@@ -1,8 +1,8 @@
 <?php
 
-namespace Testify\Router;
+namespace HomeFramework\Router;
 
-use Testify\Component\I18n;
+use HomeFramework\Component\I18n;
 
 class Response {
 
@@ -27,48 +27,24 @@ class Response {
         $file_contents = file_get_contents($path . $file);
         $file_extends_contents = null;
 
-        $lang = '';
-        if (I18n::getInstance()->active && $setLang === null) {
-            $lang = $_SESSION['lang'];
-        } elseif (I18n::getInstance()->active) {
-            $lang = $setLang;
-        }
-
         // On vérifie la présence d'une commande extends
         if (preg_match('/{% *?extends *?\'(.*)\' *?%}/m', $file_contents, $matches)) {
             $file_extends_contents = file_get_contents($path . $matches[1]);
         }
 
         if (!$file_extends_contents) {
-            $file_contents = I18n::getInstance()->computeTranslations(
-                $file_contents,
-                $context,
-                $lang
-            );
             return new Response(self::computeContext($file_contents, $context), $httpCode);
         } else {
-            $translation_not_cached = I18n::getInstance()->notCached;
             $path_cache = dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR;
             $view_name = basename($file, '.html');
             $extends_name = basename($matches[1], '.html');
 
             $cache_file = $path_cache. $view_name . '_' . $extends_name .
                 '_' . filemtime($path. $file) . '_' . filemtime($path. $matches[1]) .
-                '_' . $lang . '_t.chtml';
-            $cache_untranslated_file = $path_cache. $view_name . '_' . $extends_name .
-                '_' . filemtime($path. $file) . '_' . filemtime($path. $matches[1]) .
-                '_' . $lang . '.chtml';
+                '.chtml';
 
-            if (file_exists($cache_file) && !$translation_not_cached) {
-                I18n::getInstance()->setLangToContext($context, $lang);
+            if (file_exists($cache_file)) {
                 return new Response(self::computeContext(file_get_contents($cache_file), $context), $httpCode);
-            } elseif (file_exists($cache_file) && $translation_not_cached) {
-                $file_extends_contents = I18n::getInstance()->computeTranslations(
-                    file_get_contents($cache_untranslated_file),
-                    $context
-                );
-                file_put_contents($cache_file, $file_extends_contents, LOCK_EX);
-                return new Response(self::computeContext($file_extends_contents, $context), $httpCode);
             }
 
             $file_blocks = self::getBlocks($file_contents);
@@ -107,8 +83,6 @@ class Response {
                 }
             }
 
-            file_put_contents($cache_untranslated_file, $file_extends_contents, LOCK_EX);
-            $file_extends_contents = I18n::getInstance()->computeTranslations($file_extends_contents, $context);
             file_put_contents($cache_file, $file_extends_contents, LOCK_EX);
             return new Response(self::computeContext($file_extends_contents, $context), $httpCode);
         }

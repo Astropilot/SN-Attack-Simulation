@@ -4,10 +4,8 @@ error_reporting(-1);
 
 require_once '../app/autoload.php';
 
-use Testify\Router\Request;
-use Testify\Router\Router;
-
-session_start();
+use HomeFramework\Router\Request;
+use HomeFramework\Router\Router;
 
 Router::getInstance(new Request);
 

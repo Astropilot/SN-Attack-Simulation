@@ -1,8 +1,8 @@
 <?php
 
-namespace Testify\Router;
+namespace HomeFramework\Router;
 
-use Testify\Router\RequestData;
+use HomeFramework\Router\RequestData;
 
 interface IRequest {
 

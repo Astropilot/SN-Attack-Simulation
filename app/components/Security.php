@@ -1,6 +1,6 @@
 <?php
 
-namespace Testify\Component;
+namespace HomeFramework\Component;
 
 class Security {
 
